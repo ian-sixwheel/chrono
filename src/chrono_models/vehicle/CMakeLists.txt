@@ -991,6 +991,10 @@ set(CVM_KRAZ_FILES
     kraz/Kraz_trailer_Tire.h
     kraz/Kraz_trailer_Wheel.cpp
     kraz/Kraz_trailer_Wheel.h
+    kraz/Revoy_Chassis.cpp
+    kraz/Revoy_Chassis.h
+    kraz/Revoy.cpp
+    kraz/Revoy.h
 )
 source_group("kraz" FILES ${CVM_KRAZ_FILES})
 

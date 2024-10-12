@@ -1,0 +1,78 @@
+#include "chrono_models/vehicle/kraz/Kraz_tractor_Brake.h"
+#include "chrono_models/vehicle/kraz/Kraz_tractor_Wheel.h"
+#include "chrono_models/vehicle/kraz/Kraz_tractor_RearSuspension.h"
+#include "chrono_models/vehicle/kraz/Revoy_Chassis.h"
+#include "chrono_models/vehicle/kraz/Revoy.h"
+
+namespace chrono {
+namespace vehicle {
+namespace kraz {
+
+// -----------------------------------------------------------------------------
+Revoy::Revoy(bool fixed, CollisionType chassis_collision_type, ChContactMethod contactMethod)
+    : ChWheeledVehicle("Revoy", contactMethod) {
+    Create(fixed, chassis_collision_type);
+}
+
+Revoy::Revoy(ChSystem* system, bool fixed, CollisionType chassis_collision_type)
+    : ChWheeledVehicle("Revoy", system) {
+    Create(fixed, chassis_collision_type);
+}
+
+void Revoy::Create(bool fixed, CollisionType chassis_collision_type) {
+    // Create the chassis subsystem
+    m_chassis = chrono_types::make_shared<Revoy_Chassis>("Chassis", fixed, chassis_collision_type);
+    m_connector = chrono_types::make_shared<Revoy_Connector>("Connector");
+
+    // Create the axle subsystems
+    m_axles.resize(1);
+    m_axles[0] = chrono_types::make_shared<ChAxle>();
+
+    m_axles[0]->m_suspension = chrono_types::make_shared<Kraz_tractor_RearSuspension>("Suspension");
+
+    m_axles[0]->m_wheels.resize(2);
+    m_axles[0]->m_wheels[0] = chrono_types::make_shared<Kraz_tractor_Wheel>("Wheel_L");
+    m_axles[0]->m_wheels[1] = chrono_types::make_shared<Kraz_tractor_Wheel>("Wheel_R");
+
+    m_axles[0]->m_brake_left = chrono_types::make_shared<Kraz_tractor_Brake>("Brake_L");
+    m_axles[0]->m_brake_right = chrono_types::make_shared<Kraz_tractor_Brake>("Brake_R");
+
+    // Create the steering subsystem
+    //m_steerings.resize(1);
+    //m_steerings[0] = chrono_types::make_shared<Kraz_tractor_Steering>("Steering");
+
+    // Create the driveline
+    //m_driveline = chrono_types::make_shared<Kraz_tractor_Driveline>("driveline");
+}
+
+// -----------------------------------------------------------------------------
+void Revoy::Initialize(std::shared_ptr<ChChassis> frontChassis,
+                       const ChCoordsys<>& chassisPos,
+                       double chassisFwdVel) {
+    // Initialize the chassis subsystem.
+    m_chassis->Initialize(m_system, chassisPos, chassisFwdVel, WheeledCollisionFamily::CHASSIS);
+
+    // Initialize the connector
+    m_connector->Initialize(frontChassis, m_chassis);
+
+    // Initialize the steering subsystem (specify the steering subsystem's frame relative to the chassis reference
+    // frame).
+    m_steerings[0]->Initialize(m_chassis, ChVector3d(0, 0, 0), ChQuaternion<>(1, 0, 0, 0));
+
+    // Initialize the axle subsystem.
+    const double twin_tire_dist = 0.33528;  // Michelin for 12.00 R 20
+    m_axles[0]->Initialize(m_chassis, nullptr, nullptr, ChVector3d(-5.48, 0, 0), ChVector3d(0), twin_tire_dist);
+
+    // Initialize the driveline subsystem (6x4 = rear axles are driven)
+    //std::vector<int> driven_susp = {1, 2};
+    //m_driveline->Initialize(m_chassis, m_axles, driven_susp);
+
+    // Invoke base class method
+    ChWheeledVehicle::Initialize(chassisPos, chassisFwdVel);
+}
+
+void Revoy::DebugLog(int what) {}
+
+}  // end namespace kraz
+}  // end namespace vehicle
+}  // end namespace chrono
