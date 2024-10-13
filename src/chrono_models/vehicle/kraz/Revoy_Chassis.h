@@ -20,10 +20,7 @@ class CH_MODELS_API Revoy_Chassis : public ChRigidChassisRear {
     ~Revoy_Chassis() {}
 
     /// Get the location (in the local frame of this chassis) of the connection to the front chassis.
-    virtual const ChVector3d& GetLocalPosFrontConnector() const override {
-        std::cout << "did I get in?" << std::endl;
-        return m_front_connector_loc;
-    }
+    virtual const ChVector3d& GetLocalPosFrontConnector() const override { return m_front_connector_loc; }
     /// Get the location (in the local frame of this chassis) of the connection to the rear chassis.
     virtual const ChVector3d GetLocalPosRearConnector() const override { return m_rear_connector_loc; }
 

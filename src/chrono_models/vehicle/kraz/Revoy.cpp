@@ -52,14 +52,11 @@ void Revoy::Create(bool fixed, CollisionType chassis_collision_type) {
 void Revoy::Initialize(std::shared_ptr<ChChassis> frontChassis,
                        const ChCoordsys<>& chassisPos,
                        double chassisFwdVel) {
-    std::cout << "!" << std::endl;
     // Initialize the chassis subsystem.
     m_chassis_as_rear->Initialize(frontChassis, WheeledCollisionFamily::CHASSIS);
 
-    std::cout << "!" << std::endl;
     // Initialize the connector
     m_connector->Initialize(frontChassis, m_chassis_as_rear);
-    std::cout << "!" << std::endl;
 
     // Initialize the steering subsystem (specify the steering subsystem's frame relative to the chassis reference
     // frame).
@@ -67,9 +64,7 @@ void Revoy::Initialize(std::shared_ptr<ChChassis> frontChassis,
 
     // Initialize the axle subsystem.
     const double twin_tire_dist = 0.33528;  // Michelin for 12.00 R 20
-    std::cout << "!1" << std::endl;
-    m_axles[0]->Initialize(m_chassis, nullptr, nullptr, ChVector3d(-5.48, 0, 0), ChVector3d(0), twin_tire_dist);
-    std::cout << "!2" << std::endl;
+    m_axles[0]->Initialize(m_chassis, nullptr, nullptr, ChVector3d(-6, 0, 0), ChVector3d(0), twin_tire_dist);
 
     // Initialize the driveline subsystem (6x4 = rear axles are driven)
     //std::vector<int> driven_susp = {1, 2};
@@ -77,7 +72,6 @@ void Revoy::Initialize(std::shared_ptr<ChChassis> frontChassis,
 
     // Invoke base class method
     ChWheeledVehicle::Initialize(chassisPos, chassisFwdVel);
-    std::cout << "!3" << std::endl;
 }
 
 void Revoy::DebugLog(int what) {}

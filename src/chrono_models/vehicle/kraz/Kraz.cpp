@@ -102,9 +102,7 @@ void Kraz::Initialize() {
 
     // Create and initialize the revoy
     m_revoy = new Revoy(m_system, m_chassisCollisionType);
-    std::cout << "initializing" << std::endl;
     m_revoy->Initialize(m_tractor->GetChassis(), m_initPos, m_initFwdVel);
-    std::cout << "initialized" << std::endl;
 
     // Create and initialize the trailer
     m_trailer = new Kraz_trailer(m_system, m_chassisCollisionType);
@@ -174,10 +172,10 @@ void Kraz::Initialize() {
     auto r_tire_Ri = chrono_types::make_shared<Kraz_tractor_Tire>("RevoyTire_Ri");
     auto r_tire_Ro = chrono_types::make_shared<Kraz_tractor_Tire>("RevoyTire_Ro");
 
-    m_revoy->InitializeTire(r_tire_Li, m_revoy->GetAxle(0)->m_wheels[0], VisualizationType::NONE);
-    m_revoy->InitializeTire(r_tire_Lo, m_revoy->GetAxle(0)->m_wheels[1], VisualizationType::NONE);
-    m_revoy->InitializeTire(r_tire_Ri, m_revoy->GetAxle(0)->m_wheels[2], VisualizationType::NONE);
-    m_revoy->InitializeTire(r_tire_Ro, m_revoy->GetAxle(0)->m_wheels[3], VisualizationType::NONE);
+    m_revoy->InitializeTire(r_tire_Li, m_revoy->GetAxle(0)->m_wheels[0], VisualizationType::PRIMITIVES);
+    m_revoy->InitializeTire(r_tire_Lo, m_revoy->GetAxle(0)->m_wheels[1], VisualizationType::PRIMITIVES);
+    m_revoy->InitializeTire(r_tire_Ri, m_revoy->GetAxle(0)->m_wheels[2], VisualizationType::PRIMITIVES);
+    m_revoy->InitializeTire(r_tire_Ro, m_revoy->GetAxle(0)->m_wheels[3], VisualizationType::PRIMITIVES);
 
     // Create the trailer tires
     auto tr_tire_FL = chrono_types::make_shared<Kraz_trailer_Tire>("FL");

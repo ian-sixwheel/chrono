@@ -12,8 +12,8 @@ namespace kraz {
 const double Revoy_Chassis::m_body_mass = 10000.0;
 const ChVector3d Revoy_Chassis::m_body_inertiaXX(3441, 28485, 29395);
 const ChVector3d Revoy_Chassis::m_body_inertiaXY(0, 0, 0);
-const ChVector3d Revoy_Chassis::m_body_COM_loc(-2.0, 0, 0.8);
-const ChVector3d Revoy_Chassis::m_rear_connector_loc(-4.64, 0, 0.82);
+const ChVector3d Revoy_Chassis::m_body_COM_loc(-2.0, 0, 1.3);
+const ChVector3d Revoy_Chassis::m_rear_connector_loc(-4.5, 0, 0.82);
 const ChVector3d Revoy_Chassis::m_front_connector_loc(-0.5, 0, 0.82);
 const ChCoordsys<> Revoy_Chassis::m_driverCsys(ChVector3d(-1.5, 0.5, 1.2), ChQuaternion<>(1, 0, 0, 0));
 

@@ -21,8 +21,8 @@
 #define CH_CHASSIS_CONNECTOR_FIFTH_WHEEL_H
 
 #include "chrono_vehicle/ChChassis.h"
-#include "chrono/physics/ChLinkUniversal.h"
 #include "chrono_vehicle/chassis/ChassisConnectorHitch.h"
+#include "chrono/physics/ChLinkMate.h"
 
 namespace chrono {
 namespace vehicle {
@@ -48,7 +48,7 @@ class CH_VEHICLE_API ChChassisConnectorFifthWheel : public ChChassisConnectorHit
                             ) override;
 
   protected:
-    std::shared_ptr<ChLinkUniversal> m_joint;  ///< spherical joint of the connector
+    std::shared_ptr<ChLinkMateRevolute> m_joint;  ///< spherical joint of the connector
 };
 
 /// @} vehicle
