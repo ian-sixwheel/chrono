@@ -16,11 +16,12 @@
 //
 // =============================================================================
 
-#ifndef KRAZ_TRACTOR_H
-#define KRAZ_TRACTOR_H
+#ifndef REVOY_H
+#define REVOY_H
 
 #include "chrono_vehicle/wheeled_vehicle/ChWheeledVehicle.h"
 #include "chrono_vehicle/chassis/ChChassisConnectorHitch.h"
+#include "chrono_models/vehicle/kraz/Revoy_Chassis.h"
 
 #include "chrono_models/ChApiModels.h"
 #include "chrono_models/vehicle/ChVehicleModelDefs.h"
@@ -39,6 +40,7 @@ class CH_MODELS_API Revoy : public ChWheeledVehicle {
     ~Revoy() {}
 
     virtual unsigned int GetNumberAxles() const override { return 1; }
+    virtual double GetWheelbase() const override { return 4.78; }
 
     virtual void Initialize(std::shared_ptr<ChChassis> frontChassis,
                             const ChCoordsys<>& chassisPos,
@@ -48,6 +50,8 @@ class CH_MODELS_API Revoy : public ChWheeledVehicle {
 
   private:
     void Create(bool fixed, CollisionType chassis_collision_type);
+
+    std::shared_ptr<Revoy_Chassis> m_chassis_as_rear;
 
     std::shared_ptr<ChChassisConnectorHitch> m_connector;  ///< connector to pulling vehicle
 };

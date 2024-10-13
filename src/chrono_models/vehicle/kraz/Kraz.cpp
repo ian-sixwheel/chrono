@@ -102,7 +102,9 @@ void Kraz::Initialize() {
 
     // Create and initialize the revoy
     m_revoy = new Revoy(m_system, m_chassisCollisionType);
+    std::cout << "initializing" << std::endl;
     m_revoy->Initialize(m_tractor->GetChassis(), m_initPos, m_initFwdVel);
+    std::cout << "initialized" << std::endl;
 
     // Create and initialize the trailer
     m_trailer = new Kraz_trailer(m_system, m_chassisCollisionType);

@@ -49,17 +49,26 @@ void ChAxle::Initialize(std::shared_ptr<ChChassis> chassis,
                         double wheel_separation,
                         double left_ang_vel,
                         double right_ang_vel) {
+    std::cout << "&" << std::endl;
     m_suspension->Initialize(chassis, subchassis, steering, susp_location, left_ang_vel, right_ang_vel);
+    std::cout << "&" << std::endl;
     if (m_brake_left && m_brake_right) {
         m_brake_left->Initialize(chassis, m_suspension, LEFT);
         m_brake_right->Initialize(chassis, m_suspension, RIGHT);
     }
+    std::cout << "&" << std::endl;
     if (wheel_separation > 0) {
+        std::cout << "%" << std::endl;
         assert(m_wheels.size() == 4);
+        std::cout << "%" << std::endl;
         m_wheels[0]->Initialize(chassis, m_suspension->GetSpindle(LEFT), LEFT, -wheel_separation / 2);    // inner left
+        std::cout << "%" << std::endl;
         m_wheels[1]->Initialize(chassis, m_suspension->GetSpindle(RIGHT), RIGHT, -wheel_separation / 2);  // inner right
+        std::cout << "%" << std::endl;
         m_wheels[2]->Initialize(chassis, m_suspension->GetSpindle(LEFT), LEFT, +wheel_separation / 2);    // outer left
+        std::cout << "%" << std::endl;
         m_wheels[3]->Initialize(chassis, m_suspension->GetSpindle(RIGHT), RIGHT, +wheel_separation / 2);  // outer right
+        std::cout << "%" << std::endl;
     } else {
         assert(m_wheels.size() == 2);
         m_wheels[0]->Initialize(chassis, m_suspension->GetSpindle(LEFT), LEFT);    // left
@@ -69,6 +78,7 @@ void ChAxle::Initialize(std::shared_ptr<ChChassis> chassis,
         assert(m_suspension->IsIndependent());
         m_antirollbar->Initialize(chassis, m_suspension, arb_location);
     }
+    std::cout << "&" << std::endl;
 }
 
 void ChAxle::Synchronize(double time, const DriverInputs& driver_inputs) {

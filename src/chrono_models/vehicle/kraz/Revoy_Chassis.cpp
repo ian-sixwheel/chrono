@@ -20,7 +20,7 @@ const ChCoordsys<> Revoy_Chassis::m_driverCsys(ChVector3d(-1.5, 0.5, 1.2), ChQua
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 Revoy_Chassis::Revoy_Chassis(const std::string& name, bool fixed, CollisionType chassis_collision_type)
-    : ChRigidChassis(name) {
+    : ChRigidChassisRear(name) {
     // In this model, we use a single contact material.
     ChContactMaterialData minfo;
     minfo.mu = 1.0f;
