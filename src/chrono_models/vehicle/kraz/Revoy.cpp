@@ -2,6 +2,9 @@
 #include "chrono_models/vehicle/kraz/Kraz_tractor_Wheel.h"
 #include "chrono_models/vehicle/kraz/Kraz_tractor_RearSuspension.h"
 #include "chrono_models/vehicle/kraz/Revoy_Chassis.h"
+#include "chrono_models/vehicle/kraz/Revoy_EngineSimpleMap.h"
+#include "chrono_models/vehicle/kraz/Revoy_AutomaticTransmissionSimpleMap.h"
+#include "chrono_models/vehicle/kraz/Revoy_Driveline.h"
 #include "chrono_models/vehicle/kraz/Revoy.h"
 
 namespace chrono {
@@ -45,7 +48,7 @@ void Revoy::Create(bool fixed, CollisionType chassis_collision_type) {
     //m_steerings[0] = chrono_types::make_shared<Kraz_tractor_Steering>("Steering");
 
     // Create the driveline
-    //m_driveline = chrono_types::make_shared<Kraz_tractor_Driveline>("driveline");
+    m_driveline = chrono_types::make_shared<Revoy_Driveline>("driveline");
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +70,16 @@ void Revoy::Initialize(std::shared_ptr<ChChassis> frontChassis,
     m_axles[0]->Initialize(m_chassis, nullptr, nullptr, ChVector3d(-6, 0, 0), ChVector3d(0), twin_tire_dist);
 
     // Initialize the driveline subsystem (6x4 = rear axles are driven)
-    //std::vector<int> driven_susp = {1, 2};
-    //m_driveline->Initialize(m_chassis, m_axles, driven_susp);
+    std::vector<int> driven_susp = {0};
+    m_driveline->Initialize(m_chassis, m_axles, driven_susp);
+    m_driveline->LockCentralDifferential(0, false);
+    m_driveline->LockAxleDifferential(0, false);
+    
+    std::shared_ptr<ChEngine> engine = chrono_types::make_shared<Revoy_EngineSimpleMap>("Revoy_Engine");
+    std::shared_ptr<ChTransmission> transmission = chrono_types::make_shared<Revoy_AutomaticTransmissionSimpleMap>("Revoy_Transmission");
+
+    auto powertrain = chrono_types::make_shared<ChPowertrainAssembly>(engine, transmission);
+    this->InitializePowertrain(powertrain);
 
     // Invoke base class method
     ChWheeledVehicle::Initialize(chassisPos, chassisFwdVel);
