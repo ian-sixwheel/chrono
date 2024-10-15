@@ -991,6 +991,8 @@ set(CVM_KRAZ_FILES
     kraz/Kraz_trailer_Tire.h
     kraz/Kraz_trailer_Wheel.cpp
     kraz/Kraz_trailer_Wheel.h
+    kraz/Revoy_Steering.cpp
+    kraz/Revoy_Steering.h
     kraz/Revoy_Driveline.cpp
     kraz/Revoy_Driveline.h
     kraz/Revoy_EngineSimpleMap.cpp

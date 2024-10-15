@@ -1,7 +1,8 @@
 #include "chrono_models/vehicle/kraz/Kraz_tractor_Brake.h"
 #include "chrono_models/vehicle/kraz/Kraz_tractor_Wheel.h"
-#include "chrono_models/vehicle/kraz/Kraz_tractor_RearSuspension.h"
+#include "chrono_models/vehicle/kraz/Kraz_tractor_FrontSuspension.h"
 #include "chrono_models/vehicle/kraz/Revoy_Chassis.h"
+#include "chrono_models/vehicle/kraz/Revoy_Steering.h"
 #include "chrono_models/vehicle/kraz/Revoy_EngineSimpleMap.h"
 #include "chrono_models/vehicle/kraz/Revoy_AutomaticTransmissionSimpleMap.h"
 #include "chrono_models/vehicle/kraz/Revoy_Driveline.h"
@@ -32,7 +33,7 @@ void Revoy::Create(bool fixed, CollisionType chassis_collision_type) {
     m_axles.resize(1);
     m_axles[0] = chrono_types::make_shared<ChAxle>();
 
-    m_axles[0]->m_suspension = chrono_types::make_shared<Kraz_tractor_RearSuspension>("Suspension");
+    m_axles[0]->m_suspension = chrono_types::make_shared<Kraz_tractor_FrontSuspension>("Suspension");
 
     m_axles[0]->m_wheels.resize(4);
     m_axles[0]->m_wheels[0] = chrono_types::make_shared<Kraz_tractor_Wheel>("Wheel_Li");
@@ -44,8 +45,8 @@ void Revoy::Create(bool fixed, CollisionType chassis_collision_type) {
     m_axles[0]->m_brake_right = chrono_types::make_shared<Kraz_tractor_Brake>("Brake_R");
 
     // Create the steering subsystem
-    //m_steerings.resize(1);
-    //m_steerings[0] = chrono_types::make_shared<Kraz_tractor_Steering>("Steering");
+    m_steerings.resize(1);
+    m_steerings[0] = chrono_types::make_shared<Revoy_Steering>("Revoy_Steering");
 
     // Create the driveline
     m_driveline = chrono_types::make_shared<Revoy_Driveline>("driveline");
@@ -63,16 +64,15 @@ void Revoy::Initialize(std::shared_ptr<ChChassis> frontChassis,
 
     // Initialize the steering subsystem (specify the steering subsystem's frame relative to the chassis reference
     // frame).
-    //m_steerings[0]->Initialize(m_chassis, ChVector3d(0, 0, 0), ChQuaternion<>(1, 0, 0, 0));
+    m_steerings[0]->Initialize(m_chassis, ChVector3d(0, 0, 0), ChQuaternion<>(1, 0, 0, 0));
 
     // Initialize the axle subsystem.
     const double twin_tire_dist = 0.33528;  // Michelin for 12.00 R 20
-    m_axles[0]->Initialize(m_chassis, nullptr, nullptr, ChVector3d(-6, 0, 0), ChVector3d(0), twin_tire_dist);
+    m_axles[0]->Initialize(m_chassis, nullptr, m_steerings[0], ChVector3d(-6, 0, 0), ChVector3d(0), twin_tire_dist);
 
     // Initialize the driveline subsystem (6x4 = rear axles are driven)
     std::vector<int> driven_susp = {0};
     m_driveline->Initialize(m_chassis, m_axles, driven_susp);
-    m_driveline->LockCentralDifferential(0, false);
     m_driveline->LockAxleDifferential(0, false);
     
     std::shared_ptr<ChEngine> engine = chrono_types::make_shared<Revoy_EngineSimpleMap>("Revoy_Engine");

@@ -161,10 +161,10 @@ void Kraz::Initialize() {
     m_tractor->InitializeTire(tire_RL1o, m_tractor->GetAxle(1)->m_wheels[2], VisualizationType::NONE);
     m_tractor->InitializeTire(tire_RR1o, m_tractor->GetAxle(1)->m_wheels[3], VisualizationType::NONE);
 
-    m_tractor->InitializeTire(tire_RL2i, m_tractor->GetAxle(2)->m_wheels[0], VisualizationType::NONE);
-    m_tractor->InitializeTire(tire_RR2i, m_tractor->GetAxle(2)->m_wheels[1], VisualizationType::NONE);
-    m_tractor->InitializeTire(tire_RL2o, m_tractor->GetAxle(2)->m_wheels[2], VisualizationType::NONE);
-    m_tractor->InitializeTire(tire_RR2o, m_tractor->GetAxle(2)->m_wheels[3], VisualizationType::NONE);
+    m_revoy->InitializeTire(tire_RL2i, m_tractor->GetAxle(2)->m_wheels[0], VisualizationType::NONE);
+    m_revoy->InitializeTire(tire_RR2i, m_tractor->GetAxle(2)->m_wheels[1], VisualizationType::NONE);
+    m_revoy->InitializeTire(tire_RL2o, m_tractor->GetAxle(2)->m_wheels[2], VisualizationType::NONE);
+    m_revoy->InitializeTire(tire_RR2o, m_tractor->GetAxle(2)->m_wheels[3], VisualizationType::NONE);
 
     // Create the revoy tires
     auto r_tire_Li = chrono_types::make_shared<Kraz_tractor_Tire>("RevoyTire_Li");
@@ -223,7 +223,7 @@ void Kraz::Synchronize(double time, const DriverInputs& driver_inputs, const ChT
     // intercept driver inputs and make them simple as proof of concept. 
     // In the future we will ignore these and use the hitch force
     DriverInputs revoy_driver_inputs;
-    revoy_driver_inputs.m_steering = 0;  ///< steering input [-1, +1]
+    revoy_driver_inputs.m_steering = 1;  ///< steering input [-1, +1]
     revoy_driver_inputs.m_throttle = 1.0; ///< throttle input [0, 1]
     revoy_driver_inputs.m_braking = 0;   ///< braking input [0, 1]
     revoy_driver_inputs.m_clutch = 0;    ///< clutch input [0, 1]
