@@ -223,12 +223,13 @@ void Kraz::Synchronize(double time, const DriverInputs& driver_inputs, const ChT
     // intercept driver inputs and make them simple as proof of concept. 
     // In the future we will ignore these and use the hitch force
     DriverInputs revoy_driver_inputs;
-    revoy_driver_inputs.m_steering = 1;  ///< steering input [-1, +1]
-    revoy_driver_inputs.m_throttle = 1.0; ///< throttle input [0, 1]
+    revoy_driver_inputs.m_steering = 0*1;  ///< steering input [-1, +1]
+    revoy_driver_inputs.m_throttle = 0*1.0; ///< throttle input [0, 1]
     revoy_driver_inputs.m_braking = 0;   ///< braking input [0, 1]
     revoy_driver_inputs.m_clutch = 0;    ///< clutch input [0, 1]
 
     m_revoy->Synchronize(time, revoy_driver_inputs, terrain);
+    m_revoy->GetHitchForce();
     m_trailer->Synchronize(time, driver_inputs, terrain);
 }
 

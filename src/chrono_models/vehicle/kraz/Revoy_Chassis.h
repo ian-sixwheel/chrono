@@ -7,6 +7,8 @@
 #include "chrono_models/ChApiModels.h"
 #include "chrono_models/vehicle/ChVehicleModelDefs.h"
 
+#include <iostream>
+
 namespace chrono {
 namespace vehicle {
 namespace kraz {
@@ -47,6 +49,9 @@ class CH_MODELS_API Revoy_Chassis : public ChRigidChassisRear {
 class CH_MODELS_API Revoy_Connector : public ChChassisConnectorFifthWheel {
   public:
     Revoy_Connector(const std::string& name) : ChChassisConnectorFifthWheel(name) {}
+    void GetHitchForce() {
+      std::cout << "x: " << m_joint->GetReaction2().force.x() << ", y: " << m_joint->GetReaction2().force.y() << ", z: " << m_joint->GetReaction2().force.z() << std::endl;
+    }
     ~Revoy_Connector() {}
 };
 
