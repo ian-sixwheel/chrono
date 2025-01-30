@@ -47,7 +47,13 @@ class CH_MODELS_API Revoy : public ChWheeledVehicle {
 
     void DebugLog(int what);
 
-    void GetHitchForce() { m_connector->GetHitchForce(); };
+    double GetHitchTorque() const {
+      const double forceX = m_connector->GetHitchForce().x();
+      const double wheelRadius = GetWheel(0, LEFT)->GetTire()->GetRadius();
+      /// NOTE: the negative on Force is required to make positive torque =
+      /// forward accel
+      return -forceX * wheelRadius;
+    };
 
   private:
     void Create(bool fixed, CollisionType chassis_collision_type);
