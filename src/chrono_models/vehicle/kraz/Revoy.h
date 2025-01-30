@@ -47,7 +47,7 @@ class CH_MODELS_API Revoy : public ChWheeledVehicle {
 
     void DebugLog(int what);
 
-    void GetHitchForce() { m_connector->GetHitchForce(); };
+    double GetHitchForceX() const { return m_connector->GetHitchForceX(); };
 
   private:
     void Create(bool fixed, CollisionType chassis_collision_type);

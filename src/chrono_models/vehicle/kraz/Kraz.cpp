@@ -229,7 +229,6 @@ void Kraz::Synchronize(double time, const DriverInputs& driver_inputs, const ChT
     revoy_driver_inputs.m_clutch = 0;    ///< clutch input [0, 1]
 
     m_revoy->Synchronize(time, revoy_driver_inputs, terrain);
-    m_revoy->GetHitchForce();
     m_trailer->Synchronize(time, driver_inputs, terrain);
 }
 
