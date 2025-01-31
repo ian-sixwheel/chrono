@@ -11,23 +11,23 @@ namespace kraz {
 
 /// Simple Revoy EngineSimpleMap subsystem. EV motor
 class CH_MODELS_API Revoy_EngineSimpleMap : public ChEngineSimpleMap {
-  public:
-    Revoy_EngineSimpleMap(const std::string& name);
+public:
+  Revoy_EngineSimpleMap(const std::string &name);
 
-    /// Specify maximum engine speed.
-    virtual double GetMaxEngineSpeed() override;
+  /// Specify maximum engine speed.
+  virtual double GetMaxEngineSpeed() override;
 
-    /// Set the engine speed-torque maps.
-    /// A concrete class must add the speed-torque points to the provided maps,
-    /// using the ChFunctionInterp::AddPoint() function.
-    virtual void SetEngineTorqueMaps(ChFunctionInterp& map0,  ///< [out] engine map at zero throttle
-                                     ChFunctionInterp& mapF   ///< [out] engine map at full throttle
-                                     ) override;
+  /// Set the engine speed-torque maps.
+  /// A concrete class must add the speed-torque points to the provided maps,
+  /// using the ChFunctionInterp::AddPoint() function.
+  virtual void SetEngineTorqueMaps(
+      ChFunctionInterp &map0, ///< [out] engine map at zero throttle
+      ChFunctionInterp &mapF  ///< [out] engine map at full throttle
+      ) override;
 };
 
-
-}  // end namespace kraz
-}  // end namespace vehicle
-}  // end namespace chrono
+} // end namespace kraz
+} // end namespace vehicle
+} // end namespace chrono
 
 #endif

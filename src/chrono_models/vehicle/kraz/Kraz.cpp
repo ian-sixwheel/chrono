@@ -101,7 +101,7 @@ void Kraz::Initialize() {
     drvLine->LockCentralDifferential(0, false);
 
     // Create and initialize the revoy
-    m_revoy = new Revoy(m_system, m_chassisCollisionType);
+    m_revoy = new Revoy(m_chassisCollisionType);
     m_revoy->Initialize(m_tractor->GetChassis(), m_initPos, m_initFwdVel);
 
     // Create and initialize the trailer

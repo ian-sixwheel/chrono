@@ -40,7 +40,7 @@ public:
                           double chassisFwdVel = 0);
 
   double GetHitchTorque() const {
-    const double forceX = m_connector->GetHitchForceX();
+    const double forceX = m_connector->GetHitchForce().x();
     const double wheelRadius = GetWheel(0, LEFT)->GetTire()->GetRadius();
     /// NOTE: the negative on Force is required to make positive torque =
     /// forward accel
