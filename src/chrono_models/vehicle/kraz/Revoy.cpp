@@ -22,7 +22,7 @@ Revoy::Revoy(CollisionType chassis_collision_type,
 void Revoy::Create(CollisionType chassis_collision_type) {
   // Create the chassis subsystem
   m_chassis_as_rear = chrono_types::make_shared<Revoy_Chassis>(
-      "Chassis", false, chassis_collision_type);
+      "Chassis", chassis_collision_type);
   m_chassis = m_chassis_as_rear;
   m_connector = chrono_types::make_shared<Revoy_Connector>("Connector");
 

@@ -60,7 +60,7 @@ class CH_MODELS_API Revoy_Connector : public ChChassisConnectorFifthWheel {
 public:
   Revoy_Connector(const std::string &name)
       : ChChassisConnectorFifthWheel(name) {}
-  double GetHitchForceX() { return m_joint->GetReaction2().force.x(); }
+  ChVector3d GetHitchForce() { return m_joint->GetReaction2().force; }
   ~Revoy_Connector() {}
 };
 
