@@ -1,7 +1,7 @@
 // =============================================================================
 // PROJECT CHRONO - http://projectchrono.org
 //
-// Copyright (c) 2014 projectchrono.org
+// Copyright (c) 2024 projectchrono.org
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be found
@@ -22,7 +22,7 @@
 namespace chrono {
 namespace vehicle {
 
-ChChassisConnectorFifthWheel::ChChassisConnectorFifthWheel(const std::string& name) : ChChassisConnectorHitch(name) {}
+ChChassisConnectorFifthWheel::ChChassisConnectorFifthWheel(const std::string& name) : ChChassisConnector(name) {}
 
 ChChassisConnectorFifthWheel::~ChChassisConnectorFifthWheel() {
     if (!m_initialized)
@@ -37,13 +37,15 @@ ChChassisConnectorFifthWheel::~ChChassisConnectorFifthWheel() {
 
 void ChChassisConnectorFifthWheel::Initialize(std::shared_ptr<ChChassis> front, std::shared_ptr<ChChassisRear> rear) {
     ChChassisConnector::Initialize(front, rear);
-
-    ChFrame<> to_abs(rear->GetLocalPosFrontConnector());
+    // Express the connector reference frame in the absolute coordinate system
+    // Rotate universal joint frames to allow pitch and yaw relative DOFs
+    ChFrame<> to_abs(rear->GetLocalPosFrontConnector(), Q_ROTATE_Z_TO_X);
     to_abs.ConcatenatePreTransformation(rear->GetBody()->GetFrameRefToAbs());
 
-    m_joint = chrono_types::make_shared<ChLinkMateRevolute>();
+    // Create and initialize universal joint
+    m_joint = chrono_types::make_shared<ChLinkUniversal>();
     m_joint->SetName(m_name + " joint");
-    m_joint->Initialize(front->GetBody(), rear->GetBody(), ChFrame<>(to_abs.GetPos(), QUNIT));
+    m_joint->Initialize(front->GetBody(), rear->GetBody(), to_abs);
     rear->GetBody()->GetSystem()->AddLink(m_joint);
 }
 
